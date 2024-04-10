@@ -1,6 +1,6 @@
-FROM debian:wheezy
+FROM debian:stable-20240408
 
-MAINTAINER Olivier <olivier.docker@talkspirit.com>
+LABEL maintainer="Olivier <olivier.docker@talkspirit.com>"
 
 RUN apt-get update \
   && DEBIAN_FRONTEND=noninteractive apt-get install -q -y \
@@ -8,7 +8,7 @@ RUN apt-get update \
     ruby \
     ruby-dev \
     build-essential \
-  && gem install --no-ri --no-rdoc mailcatcher \
+  && gem install mailcatcher \
   && apt-get remove -y build-essential \
   && apt-get autoremove -y \
   && apt-get clean \
@@ -17,4 +17,3 @@ RUN apt-get update \
 EXPOSE 1080 1025
 
 ENTRYPOINT ["mailcatcher", "--smtp-ip=0.0.0.0", "--http-ip=0.0.0.0", "--foreground"]
-
